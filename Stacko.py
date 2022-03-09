@@ -1,5 +1,6 @@
 #!/usr/local/bin/python3
 import sys
+import re
 
 ### Error reporting
 def reportError(msg):
@@ -17,4 +18,6 @@ File = open(Path, "r")
 Content = File.read()
 File.close()
 
-print(Content)
+### Token parsing
+Tokens = re.findall("(?:\".*?\"|\S)+", Content)
+print (Tokens)
