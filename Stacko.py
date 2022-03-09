@@ -20,4 +20,19 @@ File.close()
 
 ### Token parsing
 Tokens = re.findall("(?:\".*?\"|\S)+", Content)
-print (Tokens)
+
+### Interpreting
+Stack = []
+
+for Token in Tokens:
+    # Push string
+    if Token.startswith('"') and Token.endswith('"'):
+        Stack.append(Token[1:-1])
+
+    # Keyword 'println'
+    elif Token == "println":
+        print(Stack.pop())
+
+    # Unknown token
+    else:
+        reportError(f"Unknown token '{Token}' found in '{Path}'.")
