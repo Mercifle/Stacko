@@ -10,7 +10,7 @@ def reportError(msg):
 Path = sys.argv[1]
 
 # Make sure file uses the '.stko' or '.stacko' extension
-if not Path.endswith(".stko") or Path.endswith(".stacko"):
+if not (Path.endswith(".stko") or Path.endswith(".stacko")):
     reportError("Extension was not '.stko' or '.stacko'")
     exit(1)
 
