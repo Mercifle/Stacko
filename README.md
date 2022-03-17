@@ -4,17 +4,17 @@ A simple stack-based programming language.
 
 ## Usage
 
-Run a Stacko script
+### Run a Stacko script
 
 **NOTE:** Stacko scripts **must** use either the `.stacko`, or `.stko` file extension.
 
-```
+```py
 ./Stacko.py <script_path>
 ```
 
 ## Examples
 
-Hello, World!
+### Hello, World!
 
 ```py
 "Hello, world!" println
@@ -31,7 +31,7 @@ later use.
 
 This program pushes the string literal `Hello, world!`, and the number literal `42` to the top of the value stack.
 
-```
+```py
 "Hello, world!" 42
 ```
 
