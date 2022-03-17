@@ -29,11 +29,10 @@ later use.
 
 #### Examples
 
-This program pushes the values `Hello, ` and `world!` to the top of the value stack.
+This program pushes the string literal `Hello, world!`, and the number literal `42` to the top of the value stack.
 
 ```
-"Hello, "
-"world!"
+"Hello, world!" 42
 ```
 
 ### Keywords
@@ -41,4 +40,5 @@ This program pushes the values `Hello, ` and `world!` to the top of the value st
 |   Name   |   Description   |
 |----------|-----------------|
 | println  | Writes the string at the top of the value stack to stdout, along with a trailing newline. |
-
+|----------|-----------------|
+|    +     | Takes the two top-most values on the stack, adds their values together, then pushes the result to the top of the stack. |
