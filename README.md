@@ -8,7 +8,7 @@ A simple stack-based programming language.
 
 **NOTE:** Stacko scripts **must** use either the `.stacko`, or `.stko` file extension.
 
-```py
+```bash
 ./Stacko.py <script_path>
 ```
 
