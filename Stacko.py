@@ -29,6 +29,11 @@ def assertIdenticalTypes(a, b):
 
 Stack = []
 
+def assertMinStackSize(minSize):
+    if len(Stack) < minSize:
+        reportError(f"Expected at least {minSize} item(s) on stack to perform operation. Found {len(Stack)} instead.")
+        exit(1)
+
 for Token in Tokens:
     # Push string
     if Token.startswith('"') and Token.endswith('"'):
@@ -41,6 +46,7 @@ for Token in Tokens:
     
     # Addition
     elif Token == "+":
+        assertMinStackSize(2)
         A = Stack.pop()
         B = Stack.pop()
         assertIdenticalTypes(A, B)
@@ -50,6 +56,7 @@ for Token in Tokens:
 
     # Keyword 'println'
     elif Token == "println":
+        assertMinStackSize(1)
         print(Stack.pop())
 
     # Unknown token
