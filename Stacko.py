@@ -22,12 +22,31 @@ File.close()
 Tokens = re.findall("(?:\".*?\"|\S)+", Content)
 
 ### Interpreting
+def assertIdenticalTypes(a, b):
+    if not (type(a) is type(b)):
+        reportError(f"Type '{type(a).__name__}' and '{type(b).__name__}' cannot be used together in an operation.")
+        exit(1)
+
 Stack = []
 
 for Token in Tokens:
     # Push string
     if Token.startswith('"') and Token.endswith('"'):
         Stack.append(Token[1:-1])
+
+    # Push number
+    elif Token.isdigit():
+        NUMBER = int(Token)
+        Stack.append(NUMBER)
+    
+    # Addition
+    elif Token == "+":
+        A = Stack.pop()
+        B = Stack.pop()
+        assertIdenticalTypes(A, B)
+
+        RESULT = B + A
+        Stack.append(RESULT)
 
     # Keyword 'println'
     elif Token == "println":
@@ -36,3 +55,4 @@ for Token in Tokens:
     # Unknown token
     else:
         reportError(f"Unknown token '{Token}' found in '{Path}'.")
+        exit(1)
