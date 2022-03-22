@@ -54,6 +54,15 @@ for Token in Tokens:
         RESULT = B + A
         Stack.append(RESULT)
 
+    elif Token == "-":
+        assertMinStackSize(2)
+        A = Stack.pop()
+        B = Stack.pop()
+        assertIdenticalTypes(A, B)
+
+        RESULT = B - A
+        Stack.append(RESULT)
+
     # Keyword 'println'
     elif Token == "println":
         assertMinStackSize(1)
