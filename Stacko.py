@@ -40,7 +40,7 @@ for Token in Tokens:
         Stack.append(Token[1:-1])
 
     # Push number
-    elif Token.isdigit():
+    elif Token.lstrip("-+").isdigit():
         NUMBER = int(Token)
         Stack.append(NUMBER)
     
