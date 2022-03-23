@@ -40,10 +40,12 @@ for Token in Tokens:
         Stack.append(Token[1:-1])
 
     # Push number
-    elif Token.lstrip("-+").isdigit():
-        NUMBER = int(Token)
+    elif Token.lstrip("-+").replace(".", "", 1).isdigit():
+        NUMBER = float(Token)
         Stack.append(NUMBER)
     
+    ### Arithmetic operations
+
     # Addition
     elif Token == "+":
         assertMinStackSize(2)
@@ -54,6 +56,7 @@ for Token in Tokens:
         RESULT = B + A
         Stack.append(RESULT)
 
+    # Subtraction
     elif Token == "-":
         assertMinStackSize(2)
         A = Stack.pop()
@@ -61,6 +64,26 @@ for Token in Tokens:
         assertIdenticalTypes(A, B)
 
         RESULT = B - A
+        Stack.append(RESULT)
+    
+    # Multiplication
+    elif Token == "*":
+        assertMinStackSize(2)
+        A = Stack.pop()
+        B = Stack.pop()
+        assertIdenticalTypes(A, B)
+
+        RESULT = B * A
+        Stack.append(RESULT)
+
+    # Division
+    elif Token == "/":
+        assertMinStackSize(2)
+        A = Stack.pop()
+        B = Stack.pop()
+        assertIdenticalTypes(A, B)
+
+        RESULT = B / A
         Stack.append(RESULT)
 
     # Keyword 'println'
