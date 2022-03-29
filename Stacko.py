@@ -44,6 +44,13 @@ for Token in Tokens:
         NUMBER = float(Token)
         Stack.append(NUMBER)
     
+    # Push 'Yes'
+    elif Token == "Yes":
+        Stack.append(True)
+
+    elif Token == "No":
+        Stack.append(False)
+
     ### Arithmetic operations
 
     # Addition
