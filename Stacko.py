@@ -22,6 +22,14 @@ File.close()
 Tokens = re.findall("(?:\".*?\"|\S)+", Content)
 
 ### Interpreting
+def printValue(val):
+    if val == True:
+        print("Yes")
+    elif val == False:
+        print("No")
+    else:
+        print(val)
+
 def assertIdenticalTypes(a, b):
     if not (type(a) is type(b)):
         reportError(f"Type '{type(a).__name__}' and '{type(b).__name__}' cannot be used together in an operation.")
@@ -96,7 +104,7 @@ for Token in Tokens:
     # Keyword 'PrintLine'
     elif Token == "PrintLine":
         assertMinStackSize(1)
-        print(Stack.pop())
+        printValue(Stack.pop())
 
     # Unknown token
     else:
