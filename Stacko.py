@@ -86,8 +86,8 @@ for Token in Tokens:
         RESULT = B / A
         Stack.append(RESULT)
 
-    # Keyword 'println'
-    elif Token == "println":
+    # Keyword 'PrintLine'
+    elif Token == "PrintLine":
         assertMinStackSize(1)
         print(Stack.pop())
 
