@@ -1,0 +1,7 @@
+Yes if {
+    "This was true!" printLine
+}
+
+No if {
+    "This was false!" printLine
+}
