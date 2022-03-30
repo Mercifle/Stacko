@@ -126,6 +126,24 @@ def interpretBlocks(Blocks):
 
             RESULT = B / A
             Stack.append(RESULT)
+        
+        # Equality
+        elif Token == "=":
+            assertMinStackSize(2)
+            A = Stack.pop()
+            B = Stack.pop()
+            assertIdenticalTypes(A, B)
+
+            RESULT = (B == A)
+            Stack.append(RESULT)
+
+        # Equality
+        elif Token == "not":
+            assertMinStackSize(1)
+            COND = Stack.pop()
+            assertType(COND, bool)
+
+            Stack.append(not COND)
 
         # Keyword 'printLine'
         elif Token == "printLine":

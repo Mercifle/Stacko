@@ -1,7 +1,3 @@
-Yes if {
-    "This was true!" printLine
-}
-
-No if {
-    "This was false!" printLine
+"Zach" "Bryce" = not if {
+    "They where not the same! (apparently)" printLine
 }
