@@ -1,0 +1,9 @@
+Yes
+if {
+    "This text will be displayed." printLine
+}
+
+No
+if {
+    "This text will NOT be displayed." printLine
+}
