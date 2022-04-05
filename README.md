@@ -17,7 +17,7 @@ A simple stack-based programming language.
 ### Hello, World!
 
 ```py
-"Hello, world!" println
+"Hello, world!" printLine
 ```
 
 ## Language Reference
