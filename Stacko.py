@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/local/bin/python3
 import sys
 import re
 
@@ -20,34 +20,6 @@ File.close()
 
 ### Token parsing
 Tokens = re.findall("(?:\".*?\"|\S)+", Content)
-<<<<<<< Updated upstream
-=======
-Tokens.reverse()
-
-def generateBlocksFromTokens():
-    Block = []
-
-    while len(Tokens) > 0 and Tokens[-1] != "}":
-        Token = Tokens.pop()
-
-        if Token == "if":
-            assert(Tokens.pop() == "{")
-            Block.append((Token, [generateBlocksFromTokens()]))
-            assert(Tokens.pop() == "}")
-
-            if len(Tokens) != 0 and Tokens[-1] == "else":
-                Tokens.pop() # Pop 'else' token
-
-                assert(Tokens.pop() == "{")
-                Block[-1][1].append(generateBlocksFromTokens())
-                assert(Tokens.pop() == "}")
-        else:
-            Block.append((Token, None))
-    
-    return Block
-
-Blocks = generateBlocksFromTokens()
->>>>>>> Stashed changes
 
 ### Interpreting
 def assertIdenticalTypes(a, b):
@@ -67,7 +39,6 @@ for Token in Tokens:
     if Token.startswith('"') and Token.endswith('"'):
         Stack.append(Token[1:-1])
 
-<<<<<<< Updated upstream
     # Push number
     elif Token.isdigit():
         NUMBER = int(Token)
@@ -92,75 +63,3 @@ for Token in Tokens:
     else:
         reportError(f"Unknown token '{Token}' found in '{Path}'.")
         exit(1)
-=======
-        # Subtraction
-        elif Token == "-":
-            assertMinStackSize(2)
-            A = Stack.pop()
-            B = Stack.pop()
-            assertIdenticalTypes(A, B)
-
-            RESULT = B - A
-            Stack.append(RESULT)
-        
-        # Multiplication
-        elif Token == "*":
-            assertMinStackSize(2)
-            A = Stack.pop()
-            B = Stack.pop()
-            assertIdenticalTypes(A, B)
-
-            RESULT = B * A
-            Stack.append(RESULT)
-
-        # Division
-        elif Token == "/":
-            assertMinStackSize(2)
-            A = Stack.pop()
-            B = Stack.pop()
-            assertIdenticalTypes(A, B)
-
-            RESULT = B / A
-            Stack.append(RESULT)
-        
-        # Equality
-        elif Token == "=":
-            assertMinStackSize(2)
-            A = Stack.pop()
-            B = Stack.pop()
-            assertIdenticalTypes(A, B)
-
-            RESULT = (B == A)
-            Stack.append(RESULT)
-
-        # Equality
-        elif Token == "not":
-            assertMinStackSize(1)
-            COND = Stack.pop()
-            assertType(COND, bool)
-
-            Stack.append(not COND)
-
-        # Keyword 'printLine'
-        elif Token == "printLine":
-            assertMinStackSize(1)
-            printValue(Stack.pop())
-
-        # Keyword 'if'
-        elif Token == "if":
-            assertMinStackSize(1)
-            COND = Stack.pop()
-            assertType(COND, bool)
-
-            if COND == True:
-                interpretBlocks(Block[0])
-            elif len(Block) == 2:
-                interpretBlocks(Block[1])
-
-        # Unknown token
-        else:
-            reportError(f"Unknown token '{Token}' found in '{Path}'.")
-            exit(1)
-
-interpretBlocks(Blocks)
->>>>>>> Stashed changes
