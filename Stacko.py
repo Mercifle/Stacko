@@ -15,11 +15,21 @@ if not (Path.endswith(".stko") or Path.endswith(".stacko")):
     exit(1)
 
 File = open(Path, "r")
-Content = File.read()
+ContentLines = File.readlines()
 File.close()
 
 ### Token parsing
-Tokens = re.findall("(?:\".*?\"|\S)+", Content)
+Tokens = []
+
+# Collect tokens, discarding tokens after the '#' symbol (comments)
+for Line in ContentLines:
+    LineTokens = re.findall("(?:\".*?\"|\S)+", Line)
+    for Token in LineTokens:
+        if Token.startswith("#"):
+            break
+
+        Tokens.append(Token)
+
 Tokens.reverse()
 
 REQUIRES_BLOCK = [ "if" ]
