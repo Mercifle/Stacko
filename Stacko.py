@@ -32,18 +32,30 @@ for Line in ContentLines:
 
 Tokens.reverse()
 
-REQUIRES_BLOCK = [ "if" ]
-
 def generateBlocksFromTokens():
     Block = []
 
     while len(Tokens) > 0 and Tokens[-1] != "}":
         Token = Tokens.pop()
 
-        if Token in REQUIRES_BLOCK:
+        # If expressions
+        if Token == "if":
+            # if { ... } else { ... }
+
             assert(Tokens.pop() == "{")
-            Block.append((Token, generateBlocksFromTokens()))
+            IfBlock = (Token, [generateBlocksFromTokens()])
             assert(Tokens.pop() == "}")
+
+            if len(Tokens) > 0 and Tokens[-1] == "else":
+                Tokens.pop()    # Skip 'else' keyword
+
+                assert(Tokens.pop() == "{")
+                IfBlock[1].append(generateBlocksFromTokens())
+                assert(Tokens.pop() == "}")
+            
+            Block.append(IfBlock)
+
+        # Normal tokens
         else:
             Block.append((Token, None))
     
@@ -167,7 +179,9 @@ def interpretBlocks(Blocks):
             assertType(COND, bool)
 
             if COND == True:
-                interpretBlocks(Block)
+                interpretBlocks(Block[0])
+            elif len(Block) == 2:
+                interpretBlocks(Block[1])
 
         # Unknown token
         else:

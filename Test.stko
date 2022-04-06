@@ -1,3 +1,5 @@
-"Zach" "Bryce" = not if {
-    "They where not the same! (apparently)" printLine
+"Zach" "Zach" = if {
+    "They were the same! (apparently)" printLine
+} else {
+    "They were not the same... (apparently)" printLine
 }
