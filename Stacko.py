@@ -166,6 +166,12 @@ def interpretBlocks(Blocks):
             assertType(COND, bool)
 
             Stack.append(not COND)
+        
+        # Duplicate
+        elif Token == "dup":
+            assertMinStackSize(1)
+            VAL = Stack[-1]
+            Stack.append(VAL)
 
         # Keyword 'printLine'
         elif Token == "printLine":
