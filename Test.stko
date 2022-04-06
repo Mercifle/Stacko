@@ -1,5 +1,11 @@
-"Zach" "Zach" = if {
-    "They were the same! (apparently)" printLine
+1
+
+dup 1 = if {
+    "The number was one!" printLine
 } else {
-    "They were not the same... (apparently)" printLine
+    dup 2 = if {
+        "The number was two!" printLine
+    } else {
+        "The number was neither one, nor two..." printLine
+    }
 }

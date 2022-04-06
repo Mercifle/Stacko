@@ -64,13 +64,13 @@ def generateBlocksFromTokens():
 Blocks = generateBlocksFromTokens()
 
 ### Interpreting
-def printValue(val):
+def printValue(val, end="\r\n"):
     if val == True:
-        print("Yes")
+        print("Yes", end=end)
     elif val == False:
-        print("No")
+        print("No", end=end)
     else:
-        print(val)
+        print(val, end=end)
 
 def assertIdenticalTypes(a, b):
     if not (type(a) is type(b)):
@@ -177,6 +177,16 @@ def interpretBlocks(Blocks):
         elif Token == "printLine":
             assertMinStackSize(1)
             printValue(Stack.pop())
+
+        # Keyword 'print'
+        elif Token == "print":
+            assertMinStackSize(1)
+            printValue(Stack.pop(), end="")
+
+        # Keyword 'readLine'
+        elif Token == "readLine":
+            LINE = input()
+            Stack.append(LINE)
 
         # Keyword 'if'
         elif Token == "if":
