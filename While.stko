@@ -1,0 +1,5 @@
+10 dup 0 = not while {
+    dup printLine   # Print counter value
+    1 -             # Subtract one from counter
+    dup 0 = not     # Check if counter is zero
+}
