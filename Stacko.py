@@ -55,6 +55,14 @@ def generateBlocksFromTokens():
             
             Block.append(IfBlock)
 
+        # While expressions
+        elif Token == "while":
+            # while { ... }
+
+            assert(Tokens.pop() == "{")
+            Block.append((Token, [generateBlocksFromTokens()]))
+            assert(Tokens.pop() == "}")
+
         # Normal tokens
         else:
             Block.append((Token, None))
@@ -198,6 +206,18 @@ def interpretBlocks(Blocks):
                 interpretBlocks(Block[0])
             elif len(Block) == 2:
                 interpretBlocks(Block[1])
+
+        # Keyword 'while'
+        elif Token == "while":
+            while True:
+                assertMinStackSize(1)
+                COND = Stack.pop()
+                assertType(COND, bool)
+
+                if not COND:
+                    break
+                
+                interpretBlocks(Block[0])
 
         # Unknown token
         else:
