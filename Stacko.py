@@ -108,13 +108,50 @@ def interpretBlocks(Blocks):
         elif Token.lstrip("-+").replace(".", "", 1).isdigit():
             NUMBER = float(Token)
             Stack.append(NUMBER)
-        
+
         # Push 'Yes'
         elif Token == "Yes":
             Stack.append(True)
 
         elif Token == "No":
             Stack.append(False)
+
+
+        ### Type-casting
+
+        # toNum
+        elif Token == "toNum":
+            assertMinStackSize(1)
+            VAL = Stack.pop()
+            Stack.append(float(VAL))
+
+        # toString
+        elif Token == "toString":
+            assertMinStackSize(1)
+            VAL = Stack.pop()
+
+            if type(VAL) is bool:
+                if VAL == True:
+                    Stack.append("Yes")
+                elif VAL == False:
+                    Stack.append("No")
+            else:
+                Stack.append(str(VAL))
+        
+        # toBool
+        elif Token == "toBool":
+            assertMinStackSize(1)
+            VAL = Stack.pop()
+
+            if type(VAL) is str:
+                if VAL == "Yes":
+                    Stack.append(True)
+                elif VAL == "No":
+                    Stack.append(False)
+            else:
+                Stack.append(bool(VAL))
+
+            Stack.append(bool(VAL))
 
         ### Arithmetic operations
 

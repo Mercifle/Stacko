@@ -1,0 +1,11 @@
+"Yes" toBool if {
+    "It worked!" printLine
+}
+
+"3.14" toNum 3.14 = if {
+    "It worked again!" printLine
+}
+
+Yes toString "Yes" = if {
+    "It worked yet again!" printLine
+}
