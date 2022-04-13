@@ -48,34 +48,35 @@ No                  # Pushes boolean literal `false`
 
 ### Keywords
 
-|   Name   |   Description   |
-|----------|-----------------|
-| println  | Writes the string at the top of the value stack to stdout, along with a trailing newline. |
-|    +     | Takes the two top-most values on the stack, adds their values together, then pushes the result to the top of the stack. |
-|    -     | Subtracts the value of the top-most value on the stack from the value below it, then pushes the result to the top of the stack. |
-|    *     | Multiplies the two top-most values on the stack with one another, then pushes the result to the top of the stack. |
-|    /     | Divides the value of the second to top-most value on the stack by the value above it, then pushes the result to the top of the stack. |
-|    =     | Compares the two top-most values on the stack, pushing `Yes` to to top of the stack if they are equal, pushing `No` otherwise. |
-|   not    | Performs a boolean not operation on the top-most value on the stack. |
+|   Name    |   Description   |
+|-----------|-----------------|
+| printLine | Writes the string at the top of the value stack to stdout, along with a trailing newline. |
+| readLine  | Reads a single line of input from stdin, pushing its value as a string onto the value stack. |
+|     +     | Takes the two top-most values on the stack, adds their values together, then pushes the result to the top of the stack. |
+|     -     | Subtracts the value of the top-most value on the stack from the value below it, then pushes the result to the top of the stack. |
+|     *     | Multiplies the two top-most values on the stack with one another, then pushes the result to the top of the stack. |
+|     /     | Divides the value of the second to top-most value on the stack by the value above it, then pushes the result to the top of the stack. |
+|     =     | Compares the two top-most values on the stack, pushing `Yes` to to top of the stack if they are equal, pushing `No` otherwise. |
+|    not    | Performs a boolean not operation on the top-most value on the stack. |
+|    dup    | Duplicated the top-most value on the stack, placing it above the original value. |
 
 ### Control Flow
 
 If expressions can be used to execute code conditionally. If expressions begin with the `if` keyword
 and are followed by an expression body--a sequence of instructions between a pair of curly braces.
+If expressions may optionally be followed by an else expression.
 
 If the top-most value on the stack when an if expression is encountered is true, the instructions
-inside the if body will be executed. Otherwise, they will be ignored.
+inside the if body will be executed. Otherwise, the following else expression will be run, if it
+exists.
 
 #### Example
 
 ```py
-Yes     # Pushes boolean `true` to the top of the stack
-if {
-    "This text will be displayed." printLine
-}
-
-No      # Pushes boolean `false` to the top of the stack
+No      # Pushes boolean `true` to the top of the stack
 if {
     "This text will NOT be displayed." printLine
+} else {
+    "This text WILL be displayed." printLine
 }
 ```
