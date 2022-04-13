@@ -73,10 +73,11 @@ Blocks = generateBlocksFromTokens()
 
 ### Interpreting
 def printValue(val, end="\r\n"):
-    if val == True:
-        print("Yes", end=end)
-    elif val == False:
-        print("No", end=end)
+    if type(val) is bool:
+        if val == True:
+            print("Yes", end=end)
+        elif val == False:
+            print("No", end=end)
     else:
         print(val, end=end)
 
