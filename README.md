@@ -80,3 +80,20 @@ if {
     "This text WILL be displayed." printLine
 }
 ```
+
+### Type Casting
+
+Values can be cast between types by means of a few select keywords, namely `toNum`, `toString`, and
+`toBool`.
+
+#### Example
+
+```py
+"3.14" toNum
+2 *
+printLine   # Prints 6.28
+
+"No" toBool not
+printLine   # Prints Yes
+```
+
