@@ -70,7 +70,12 @@ If the top-most value on the stack when an if expression is encountered is true,
 inside the if body will be executed. Otherwise, the following else expression will be run, if it
 exists.
 
-#### Example
+While expressions operate similarly to if expressions, except they will continually run the
+instructions in their body so long as the value at the top of the stack is true.
+
+#### Examples
+
+##### If & Else Expressions
 
 ```py
 No      # Pushes boolean `true` to the top of the stack
@@ -78,6 +83,17 @@ if {
     "This text will NOT be displayed." printLine
 } else {
     "This text WILL be displayed." printLine
+}
+```
+
+##### While Expression
+
+```py
+# Count downwards from 10
+10 dup 0 = not while {
+    dup printLine
+    1 -
+    dup 0 = not
 }
 ```
 
