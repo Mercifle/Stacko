@@ -1,0 +1,8 @@
+fnn sayHi {
+    "Hello," printLine
+    print
+    "!  :)" printLine
+}
+
+"Zach" sayHi
+"Bryce" sayHi

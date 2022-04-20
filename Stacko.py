@@ -32,6 +32,14 @@ for Line in ContentLines:
 
 Tokens.reverse()
 
+class Expression:
+    name = ""
+    bodies = []
+
+    def __init__(self, b, n = ""):
+        self.name = n
+        self.bodies = b
+
 def generateBlocksFromTokens():
     Block = []
 
@@ -43,14 +51,14 @@ def generateBlocksFromTokens():
             # if { ... } else { ... }
 
             assert(Tokens.pop() == "{")
-            IfBlock = (Token, [generateBlocksFromTokens()])
+            IfBlock = (Token, Expression([generateBlocksFromTokens()]))
             assert(Tokens.pop() == "}")
 
             if len(Tokens) > 0 and Tokens[-1] == "else":
                 Tokens.pop()    # Skip 'else' keyword
 
                 assert(Tokens.pop() == "{")
-                IfBlock[1].append(generateBlocksFromTokens())
+                IfBlock[1].bodies.append(generateBlocksFromTokens())
                 assert(Tokens.pop() == "}")
             
             Block.append(IfBlock)
@@ -60,7 +68,16 @@ def generateBlocksFromTokens():
             # while { ... }
 
             assert(Tokens.pop() == "{")
-            Block.append((Token, [generateBlocksFromTokens()]))
+            Block.append((Token, Expression([generateBlocksFromTokens()])))
+            assert(Tokens.pop() == "}")
+        
+        # Functions
+        elif Token == "fnn":
+            # fnn <name> { ... }
+            
+            NAME = Tokens.pop()
+            assert(Tokens.pop() == "{")
+            Block.append((Token, Expression([generateBlocksFromTokens()], NAME)))
             assert(Tokens.pop() == "}")
 
         # Normal tokens
@@ -98,8 +115,24 @@ def assertMinStackSize(minSize):
         reportError(f"Expected at least {minSize} item(s) on stack to perform operation. Found {len(Stack)} instead.")
         exit(1)
 
+Functions = []
+
+def doesFunctionExist(name):
+    for Func in Functions:
+        if Func[0] == name:
+            return True
+    
+    return False
+
+def getFunctionWithName(name):
+    for Func in Functions:
+        if Func[0] == name:
+            return Func
+    
+    return None
+
 def interpretBlocks(Blocks):
-    for Token, Block in Blocks:
+    for Token, Expr in Blocks:
         # Push string
         if Token.startswith('"') and Token.endswith('"'):
             Stack.append(Token[1:-1])
@@ -241,9 +274,9 @@ def interpretBlocks(Blocks):
             assertType(COND, bool)
 
             if COND == True:
-                interpretBlocks(Block[0])
-            elif len(Block) == 2:
-                interpretBlocks(Block[1])
+                interpretBlocks(Expr.bodies[0])
+            elif len(Expr.bodies) == 2:
+                interpretBlocks(Expr.bodies[1])
 
         # Keyword 'while'
         elif Token == "while":
@@ -255,7 +288,18 @@ def interpretBlocks(Blocks):
                 if not COND:
                     break
                 
-                interpretBlocks(Block[0])
+                interpretBlocks(Expr.bodies[0])
+        
+        # Keyword 'fnn'
+        elif Token == "fnn":
+            NAME = Expr.name
+            BODY = Expr.bodies[0]
+            Functions.append((NAME, BODY))
+
+        # Function
+        elif doesFunctionExist(Token):
+            FUNC = getFunctionWithName(Token)
+            interpretBlocks(FUNC[1])
 
         # Unknown token
         else:
