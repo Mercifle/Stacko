@@ -97,6 +97,24 @@ if {
 }
 ```
 
+### Functions
+
+Functions can be used to reuse code multiple times within a script easily.
+
+Functions can be created by using the `fnn` keyword, followed by a name and a body.
+
+#### Example
+
+```py
+fnn sayHello {
+    "Hello, "   print
+                print
+    "!"         printLine
+}
+
+"World" sayHello    # Prints "Hello, World!"
+```
+
 ### Type Casting
 
 Values can be cast between types by means of a few select keywords, namely `toNum`, `toString`, and
