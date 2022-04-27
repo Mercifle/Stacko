@@ -266,6 +266,13 @@ def interpretBlocks(Blocks):
         elif Token == "readLine":
             LINE = input()
             Stack.append(LINE)
+        
+        # Keyowrd 'exit'
+        elif Token == "exit":
+            assertMinStackSize(1)
+            RETURN_CODE = Stack.pop()
+            assertType(RETURN_CODE, float)
+            exit(int(RETURN_CODE))
 
         # Keyword 'if'
         elif Token == "if":
