@@ -1,0 +1,5 @@
+fnn makeZero {
+    0
+}
+
+1 makeZero exit
