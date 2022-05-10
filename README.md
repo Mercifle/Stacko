@@ -12,6 +12,12 @@ A simple stack-based programming language.
 ./Stacko.py <script_path>
 ```
 
+### Run Test Suite
+
+```bash
+python3 Test.py
+```
+
 ## Examples
 
 ### Hello, World!
