@@ -1,0 +1,23 @@
+# Numeric values
+3.14 3.14 = not if {
+    1 exit
+}
+3.14 2.72 = if {
+    1 exit
+}
+
+# Strings
+"hello" "hello" = not if {
+    1 exit
+}
+"hello" "world" = if {
+    1 exit
+}
+
+# Booleans
+Yes Yes = not if {
+    1 exit
+}
+Yes No = if {
+    1 exit
+}

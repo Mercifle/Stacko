@@ -1,6 +1,16 @@
-3.14 2 *
-6.28 = if {
-    0 exit
-} else {
+"Addition..." printLine
+5 2 + 7 = not if {
+    1 exit
+}
+"Subtraction..." printLine
+5 2 - 3 = not if {
+    1 exit
+}
+"Multiplication..." printLine
+5 2 * 10 = not if {
+    1 exit
+}
+"Division..." printLine
+5 2 / 2.5 = not if {
     1 exit
 }

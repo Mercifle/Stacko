@@ -1,0 +1,9 @@
+No if {
+    1 exit
+}
+
+Yes if {
+    0 exit
+}
+
+1 exit
