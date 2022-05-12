@@ -80,6 +80,13 @@ def generateBlocksFromTokens():
             Block.append((Token, Expression([generateBlocksFromTokens()], NAME)))
             assert(Tokens.pop() == "}")
 
+        # Constants
+        elif Token == "const":
+            # const <name>
+
+            NAME = Tokens.pop()
+            Block.append((Token, Expression(None, NAME)))
+
         # Normal tokens
         else:
             Block.append((Token, None))
@@ -130,6 +137,30 @@ def getFunctionWithName(name):
             return Func
     
     return None
+
+Constants = []
+
+def doesConstantExist(name):
+    for Const in Constants:
+        if Const[0] == name:
+            return True
+    
+    return False
+
+def getConstantWithName(name):
+    for Const in Constants:
+        if Const[0] == name:
+            return Const
+    
+    return None
+
+def doesNameExist(name):
+    if getFunctionWithName(name) != None:
+        return True
+    if getConstantWithName(name) != None:
+        return True
+    
+    return False
 
 def interpretBlocks(Blocks):
     for Token, Expr in Blocks:
@@ -301,12 +332,33 @@ def interpretBlocks(Blocks):
         elif Token == "fnn":
             NAME = Expr.name
             BODY = Expr.bodies[0]
+            if doesNameExist(NAME):
+                reportError(f"Name '{NAME}' already exists elsewhere.")
+                exit(1)
+            
             Functions.append((NAME, BODY))
+
+        # Keyword 'const'
+        elif Token == "const":
+            assertMinStackSize(1)
+            NAME = Expr.name
+
+            if doesNameExist(NAME):
+                reportError(f"Name '{NAME}' already exists elsewhere.")
+                exit(1)
+            
+            VAL = Stack.pop()
+            Constants.append((NAME, VAL))
 
         # Function
         elif doesFunctionExist(Token):
             FUNC = getFunctionWithName(Token)
             interpretBlocks(FUNC[1])
+        
+        # Constant
+        elif doesConstantExist(Token):
+            CONST = getConstantWithName(Token)
+            Stack.append(CONST[1])
 
         # Unknown token
         else:
