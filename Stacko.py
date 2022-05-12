@@ -305,6 +305,40 @@ def interpretBlocks(Blocks):
             assertType(RETURN_CODE, float)
             exit(int(RETURN_CODE))
 
+        ### Assertions
+        
+        # Keyword 'assert'
+        elif Token == "assert":
+            assertMinStackSize(1)
+            VAL = Stack.pop()
+            assertType(VAL, bool)
+            
+            if not VAL:
+                reportError(f"Assertion failed.")
+                exit(2)
+        
+        # Keyword 'assertEqual'
+        elif Token == "assertEqual":
+            assertMinStackSize(2)
+            A = Stack.pop()
+            B = Stack.pop()
+            assertIdenticalTypes(A, B)
+            
+            if A != B:
+                reportError(f"Assertion failed. Values were not equal.")
+                exit(2)
+
+        # Keyword 'assertNotEqual'
+        elif Token == "assertNotEqual":
+            assertMinStackSize(2)
+            A = Stack.pop()
+            B = Stack.pop()
+            assertIdenticalTypes(A, B)
+            
+            if A == B:
+                reportError(f"Assertion failed. Values were equal.")
+                exit(2)
+
         # Keyword 'if'
         elif Token == "if":
             assertMinStackSize(1)
