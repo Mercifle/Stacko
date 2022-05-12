@@ -1,0 +1,3 @@
+Yes assert
+5 5 + 10 assertEqual
+3 7 assertNotEqual
