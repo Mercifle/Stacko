@@ -1,0 +1,30 @@
+fnn FizzBuzz {
+    dup
+
+    dup 15 % 0 = if {
+        pop
+        "FizzBuzz" printLine
+    } else {
+        dup 5 % 0 = if {
+            pop
+            "Buzz" printLine
+        } else {
+            dup 3 % 0 = if {
+                pop
+                "Fizz" printLine
+            } else {
+                # Print number
+                printLine
+            }
+        }
+    }
+}
+
+1 dup 100 > not while {
+    dup FizzBuzz
+
+    # Increase counter by one
+    1 +
+    # Check if counter is not 100
+    dup 100 > not
+}
