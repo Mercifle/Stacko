@@ -269,6 +269,50 @@ def interpretBlocks(Blocks):
             RESULT = (B == A)
             Stack.append(RESULT)
 
+        # Greater than
+        elif Token == ">":
+            assertMinStackSize(2)
+            A = Stack.pop()
+            assertType(A, float)
+            B = Stack.pop()
+            assertType(B, float)
+
+            RESULT = B > A
+            Stack.append(RESULT)
+
+        # Less than
+        elif Token == "<":
+            assertMinStackSize(2)
+            A = Stack.pop()
+            assertType(A, float)
+            B = Stack.pop()
+            assertType(B, float)
+
+            RESULT = B < A
+            Stack.append(RESULT)
+
+        # Greater than or equal to
+        elif Token == ">=":
+            assertMinStackSize(2)
+            A = Stack.pop()
+            assertType(A, float)
+            B = Stack.pop()
+            assertType(B, float)
+
+            RESULT = B >= A
+            Stack.append(RESULT)
+
+        # Less than or equal to
+        elif Token == "<=":
+            assertMinStackSize(2)
+            A = Stack.pop()
+            assertType(A, float)
+            B = Stack.pop()
+            assertType(B, float)
+
+            RESULT = B <= A
+            Stack.append(RESULT)
+
         # Equality
         elif Token == "not":
             assertMinStackSize(1)
