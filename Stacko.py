@@ -258,7 +258,17 @@ def interpretBlocks(Blocks):
 
             RESULT = B / A
             Stack.append(RESULT)
-        
+
+        # Modulo
+        elif Token == "%":
+            assertMinStackSize(2)
+            A = Stack.pop()
+            B = Stack.pop()
+            assertIdenticalTypes(A, B)
+
+            RESULT = B % A
+            Stack.append(RESULT)
+
         # Equality
         elif Token == "=":
             assertMinStackSize(2)
