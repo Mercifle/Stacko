@@ -327,6 +327,11 @@ def interpretBlocks(Blocks):
             VAL = Stack[-1]
             Stack.append(VAL)
 
+        # Pop
+        elif Token == "pop":
+            assertMinStackSize(1)
+            Stack.pop()
+
         # Keyword 'printLine'
         elif Token == "printLine":
             assertMinStackSize(1)
