@@ -54,17 +54,17 @@ No                  # Pushes boolean literal `false`
 
 ### Keywords
 
-|   Name    |   Description   |
-|-----------|-----------------|
-| printLine | Writes the string at the top of the value stack to stdout, along with a trailing newline. |
-| readLine  | Reads a single line of input from stdin, pushing its value as a string onto the value stack. |
-|     +     | Takes the two top-most values on the stack, adds their values together, then pushes the result to the top of the stack. |
-|     -     | Subtracts the value of the top-most value on the stack from the value below it, then pushes the result to the top of the stack. |
-|     *     | Multiplies the two top-most values on the stack with one another, then pushes the result to the top of the stack. |
-|     /     | Divides the value of the second to top-most value on the stack by the value above it, then pushes the result to the top of the stack. |
-|     =     | Compares the two top-most values on the stack, pushing `Yes` to to top of the stack if they are equal, pushing `No` otherwise. |
-|    not    | Performs a boolean not operation on the top-most value on the stack. |
-|    dup    | Duplicated the top-most value on the stack, placing it above the original value. |
+| Name | Signature |   Description   |
+|------|-----------|-----------------|
+| printLine | str -- | Writes the string at the top of the value stack to stdout, along with a trailing newline. |
+| readLine | -- str | Reads a single line of input from stdin, pushing its value as a string onto the value stack. |
+| + | a b -- c | Takes the two top-most values on the stack, adds their values together, then pushes the result to the top of the stack. |
+| - | a b -- c | Subtracts the value of the top-most value on the stack from the value below it, then pushes the result to the top of the stack. |
+| * | a b -- c | Multiplies the two top-most values on the stack with one another, then pushes the result to the top of the stack. |
+| / | a b -- c | Divides the value of the second to top-most value on the stack by the value above it, then pushes the result to the top of the stack. |
+| = | a b -- c | Compares the two top-most values on the stack, pushing `Yes` to to top of the stack if they are equal, pushing `No` otherwise. |
+| not | a --b | Performs a boolean not operation on the top-most value on the stack. |
+| dup | a -- a a | Duplicated the top-most value on the stack, placing it above the original value. |
 
 ### Control Flow
 
