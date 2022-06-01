@@ -23,7 +23,7 @@ def collectImports(FilePath):
 
     for I, Word in enumerate(Words):
         # import <file path>
-        if Word == "import":
+        if Word == "file":
             ImportPath = Words[I + 1]
 
             if ImportPath in Imports:
@@ -48,7 +48,7 @@ def collectTokensFromFile(FilePath):
     for Line in ContentLines:
         LineTokens = re.findall("(?:\".*?\"|\S)+", Line)
 
-        if len(LineTokens) > 0 and LineTokens[0] == "import":
+        if len(LineTokens) > 0 and LineTokens[0] == "file":
             continue
 
         for Token in LineTokens:
