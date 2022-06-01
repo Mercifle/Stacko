@@ -9,27 +9,66 @@ def reportError(msg):
 # TODO: Make sure a minimum of 2 arguments are passed
 Path = sys.argv[1]
 
-# Make sure file uses the '.stko' or '.stacko' extension
-if not (Path.endswith(".stko") or Path.endswith(".stacko")):
-    reportError("Extension was not '.stko' or '.stacko'")
-    exit(1)
+Imports = []
 
-File = open(Path, "r")
-ContentLines = File.readlines()
-File.close()
+def collectImports(FilePath):
+    # Make sure file uses the '.stko' or '.stacko' extension
+    if not (FilePath.endswith(".stko") or FilePath.endswith(".stacko")):
+        reportError("Extension was not '.stko' or '.stacko'")
+        exit(1)
 
-### Token parsing
+    File = open(FilePath, "r")
+    Words = File.read().split()
+    File.close()
+
+    for I, Word in enumerate(Words):
+        # import <file path>
+        if Word == "import":
+            ImportPath = Words[I + 1]
+
+            if ImportPath in Imports:
+                continue
+
+            Imports.append(ImportPath)
+            collectImports(ImportPath)
+
+def collectTokensFromFile(FilePath):
+    # Make sure file uses the '.stko' or '.stacko' extension
+    if not (FilePath.endswith(".stko") or FilePath.endswith(".stacko")):
+        reportError("Extension was not '.stko' or '.stacko'")
+        exit(1)
+
+    File = open(FilePath, "r")
+    ContentLines = File.readlines()
+    File.close()
+
+    Tokens = []
+
+    # Collect tokens, discarding tokens after the '#' symbol (comments)
+    for Line in ContentLines:
+        LineTokens = re.findall("(?:\".*?\"|\S)+", Line)
+
+        if len(LineTokens) > 0 and LineTokens[0] == "import":
+            continue
+
+        for Token in LineTokens:
+            if Token.startswith("#"):
+                break
+
+            Tokens.append(Token)
+    
+    return Tokens
+
+### Collect imports
+collectImports(Path)
+Imports.reverse()
+
 Tokens = []
 
-# Collect tokens, discarding tokens after the '#' symbol (comments)
-for Line in ContentLines:
-    LineTokens = re.findall("(?:\".*?\"|\S)+", Line)
-    for Token in LineTokens:
-        if Token.startswith("#"):
-            break
+for ImportPath in Imports:
+    Tokens += collectTokensFromFile(ImportPath)
 
-        Tokens.append(Token)
-
+Tokens += collectTokensFromFile(Path)
 Tokens.reverse()
 
 class Expression:
