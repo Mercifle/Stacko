@@ -1,0 +1,4 @@
+fnn testFunction {
+    "Success!" printLine
+    0 exit
+}

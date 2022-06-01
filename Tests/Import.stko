@@ -1,0 +1,4 @@
+# FIXME: Imports paths should be relative to the source file, as opposed to the directory in which the interpreter is called
+import Tests/ImportHelper.stko
+
+testFunction
