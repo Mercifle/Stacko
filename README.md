@@ -15,7 +15,7 @@ A simple stack-based programming language.
 ### Run Test Suite
 
 ```bash
-python3 Test.py
+./Test.py
 ```
 
 ## Examples
@@ -26,17 +26,29 @@ python3 Test.py
 "Hello, world!" printLine
 ```
 
+### Count Backwards From Ten
+
+```py
+10 dup 0 = not while {
+    dup printLine   # Print counter value
+    1 -             # Subtrack one from counter
+    dup 0 = not     # Check if counter is zero
+}
+```
+
 ## Language Reference
 
 ### Comments
 
 All characters after the `#` symbol will be ignored by the interpreter until the beginning of the
-proceeding line. This feature can be used to include comments in code.
+next line. This feature can be used to include comments in code.
 
 #### Example
+
 ```py
 # This is a comment. This text will be ignored by the interpreter.
 ```
+
 
 ### Literals
 
@@ -52,19 +64,59 @@ Yes                 # Pushes boolean literal `true`
 No                  # Pushes boolean literal `false`
 ```
 
-### Keywords
+### Types
 
-|   Name    |   Description   |
-|-----------|-----------------|
-| printLine | Writes the string at the top of the value stack to stdout, along with a trailing newline. |
-| readLine  | Reads a single line of input from stdin, pushing its value as a string onto the value stack. |
-|     +     | Takes the two top-most values on the stack, adds their values together, then pushes the result to the top of the stack. |
-|     -     | Subtracts the value of the top-most value on the stack from the value below it, then pushes the result to the top of the stack. |
-|     *     | Multiplies the two top-most values on the stack with one another, then pushes the result to the top of the stack. |
-|     /     | Divides the value of the second to top-most value on the stack by the value above it, then pushes the result to the top of the stack. |
-|     =     | Compares the two top-most values on the stack, pushing `Yes` to to top of the stack if they are equal, pushing `No` otherwise. |
-|    not    | Performs a boolean not operation on the top-most value on the stack. |
-|    dup    | Duplicated the top-most value on the stack, placing it above the original value. |
+Values can fall into one of three types in Stack, those types being `number`, `boolean`, or `string`.
+Three cooresponding operators exist allowing you to *attempt* to convert a value of one type into that of another.
+If the value you are trying to coerce cannot be coerced into the desired type, the program will crash.
+
+#### Example
+
+```py
+"3.14" toNum  3.14   assertEqual
+Yes toString  "Yes"  assertEqual
+"Yes" toNum     # This line will cause the program to crash, as "Yes" cannot be converted to a number
+```
+
+### Operators
+
+#### Stack Operations
+
+| Name | Signature |   Description   |
+|------|-----------|-----------------|
+| dup | a -- a a | Duplicates the top-most value on the stack. |
+| pop | a -- | Removes the top-most value from the stack. |
+
+#### Arithmetic Operations
+
+| Name | Signature |   Description   |
+|------|-----------|-----------------|
+| + | a b -- c | Adds two values on the top of the stack. |
+| - | a b -- c | Subtracts two values on the top of the stack. |
+| * | a b -- c | Multiplies two values on the top of the stack. |
+| / | a b -- c | Divides two values on the top of the stack. |
+| % | a b -- c | Performs modulo operatino on the two values on the top of the stack. |
+
+#### Comparative Operations
+
+| Name | Signature |   Description   |
+|------|-----------|-----------------|
+| = | a b -- c | Compares two values on top of the stack. |
+| < | a b -- c | Applies the less than comparison to the two values on top of the stack. |
+| <= | a b -- c | Applies the less than or equal to comparison to the two values on top of the stack. |
+| > | a b -- c | Applies the greater than comparison to the two values on top of the stack. |
+| >= | a b -- c | Applies the greater than or equal to comparison to the two values on top of the stack. |
+
+#### Miscellaneous Operations
+
+| Name | Signature |   Description   |
+|------|-----------|-----------------|
+| printLine | out -- | Writes the contents of a string to stdout, along with a trailing newline character. |
+| readLine | -- in | Reads a single line of input from stdin, pushing the line's contents onto the value stack as a string. |
+| exit | a -- | Exits with specified return code. |
+| assert | a -- | Exits with return code of 1 if `a` is false. |
+| assertEqual | a b -- | Exits with return code of 2 if both `a` and `b` are not equal. |
+| assertNotEqual | a b -- | Exits with return code of 2 if both `a` and `b` equal. |
 
 ### Control Flow
 
@@ -120,20 +172,3 @@ fnn sayHello {
 
 "World" sayHello    # Prints "Hello, World!"
 ```
-
-### Type Casting
-
-Values can be cast between types by means of a few select keywords, namely `toNum`, `toString`, and
-`toBool`.
-
-#### Example
-
-```py
-"3.14" toNum
-2 *
-printLine   # Prints 6.28
-
-"No" toBool not
-printLine   # Prints Yes
-```
-
