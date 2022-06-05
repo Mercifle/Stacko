@@ -1,0 +1,83 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Stacko",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#constants"
+		},
+		{
+			"include": "#const-def"
+		},
+		{
+			"include": "#fnn-def"
+		},
+		{
+			"include": "#comments"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.stacko",
+					"match": "\\b(if|else|while)\\b"
+				},
+				{
+					"name": "keyword.operator.stacko",
+					"match": "\\b(\\+|-|\\*|\\/|%|=|<|<=|>|>=)\\b"
+				},
+				{
+					"name": "keyword.other.stacko",
+					"match": "\\b(dup|pop|not|printLine|readLine|exit|assert|assertEqual|assertNotEqual|toNum|toString|toBool)\\b"
+				}
+			]
+		},
+		"constants": {
+			"patterns": [
+				{
+					"name": "string.quoted.double.stacko",
+					"begin": "\"",
+					"end": "\""
+				},
+				{
+					"name": "constant.numeric.stacko",
+					"match": "\\d+(\\.\\d+)?"
+				},
+				{
+					"name": "constant.language.stacko",
+					"match": "\\b(Yes|No)\\b"
+				}
+			]
+		},
+		"const-def": {
+			"match": "\\b(const)\\s+(\\S+)",
+			"captures": {
+				"1": {
+					"name": "keyword.const.stacko"
+				},
+				"2": {
+					"name": "variable.name"
+				}
+			}
+		},
+		"fnn-def": {
+			"match": "\\b(fnn)\\s+(\\S+)",
+			"captures": {
+				"1": {
+					"name": "keyword.fnn.stacko"
+				},
+				"2": {
+					"name": "entity.name.function"
+				}
+			}
+		},
+		"comments": {
+			"name": "comment.line.number-sign.stacko",
+			"match": "#.*$\\n?"
+		}
+	},
+	"scopeName": "source.stacko"
+}
