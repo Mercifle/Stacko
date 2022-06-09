@@ -1,0 +1,26 @@
+{
+    "name": "stacko-lang",
+    "displayName": "Stacko Lang",
+    "description": "Syntax highlighting support for the Stacko programming language",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.67.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "stacko",
+            "aliases": ["Stacko", "stacko"],
+            "extensions": [".stko",".stacko"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "stacko",
+            "scopeName": "source.stacko",
+            "path": "./syntaxes/stacko.tmLanguage.json"
+        }]
+    },
+    "repository": { }
+}
