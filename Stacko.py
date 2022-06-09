@@ -3,11 +3,16 @@ import sys
 import re
 
 ### Error reporting
-def reportError(msg):
-    print(f"\33[31mError\33[0m: \33[32m{msg}\33[0m 😭", file=sys.stderr)
+def reportError(msg, emoji="😭"):
+    print(f"\33[31mError\33[0m: \33[32m{msg}\33[0m {emoji}", file=sys.stderr)
 
-# TODO: Make sure a minimum of 2 arguments are passed
-Path = sys.argv[1]
+ARGS = sys.argv
+
+if len(ARGS) != 2:
+    reportError("No file given")
+    exit(1)
+
+Path = ARGS[1]
 
 Imports = []
 
@@ -17,10 +22,14 @@ def collectImports(FilePath):
         reportError("Extension was not '.stko' or '.stacko'")
         exit(1)
 
-    File = open(FilePath, "r")
-    Words = File.read().split()
-    File.close()
-
+    try:
+        File = open(FilePath, "r")
+        Words = File.read().split()
+        File.close()
+    except:
+        reportError(f"Failed to open '{FilePath}'. No such file exists", "😐🔍")
+        exit(1)
+    
     for I, Word in enumerate(Words):
         # import <file path>
         if Word == "file":
@@ -38,9 +47,13 @@ def collectTokensFromFile(FilePath):
         reportError("Extension was not '.stko' or '.stacko'")
         exit(1)
 
-    File = open(FilePath, "r")
-    ContentLines = File.readlines()
-    File.close()
+    try:
+        File = open(FilePath, "r")
+        ContentLines = File.readlines()
+        File.close()
+    except:
+        reportError(f"Failed to open '{FilePath}'. No such file exists", "😐🔍")
+        exit(1)
 
     Tokens = []
 
@@ -79,6 +92,16 @@ class Expression:
         self.name = n
         self.bodies = b
 
+def expectToken(Val):
+    if len(Tokens) == 0:
+        reportError(f"Expected '{Val}', found nothing instead", "😐🔍")
+        exit(1)
+    
+    TOKEN = Tokens.pop()
+    if TOKEN != Val:
+        reportError(f"Expected '{Val}', found {TOKEN} instead", "😐🔍")
+        exit(1)
+
 def generateBlocksFromTokens():
     Block = []
 
@@ -89,16 +112,16 @@ def generateBlocksFromTokens():
         if Token == "if":
             # if { ... } else { ... }
 
-            assert(Tokens.pop() == "{")
+            expectToken("{")
             IfBlock = (Token, Expression([generateBlocksFromTokens()]))
-            assert(Tokens.pop() == "}")
+            expectToken("}")
 
             if len(Tokens) > 0 and Tokens[-1] == "else":
                 Tokens.pop()    # Skip 'else' keyword
 
-                assert(Tokens.pop() == "{")
+                expectToken("{")
                 IfBlock[1].bodies.append(generateBlocksFromTokens())
-                assert(Tokens.pop() == "}")
+                expectToken("}")
             
             Block.append(IfBlock)
 
@@ -106,18 +129,18 @@ def generateBlocksFromTokens():
         elif Token == "while":
             # while { ... }
 
-            assert(Tokens.pop() == "{")
+            expectToken("{")
             Block.append((Token, Expression([generateBlocksFromTokens()])))
-            assert(Tokens.pop() == "}")
+            expectToken("}")
         
         # Functions
         elif Token == "fnn":
             # fnn <name> { ... }
             
             NAME = Tokens.pop()
-            assert(Tokens.pop() == "{")
+            expectToken("{")
             Block.append((Token, Expression([generateBlocksFromTokens()], NAME)))
-            assert(Tokens.pop() == "}")
+            expectToken("}")
 
         # Constants
         elif Token == "const":
