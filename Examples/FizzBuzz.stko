@@ -2,16 +2,16 @@ fnn FizzBuzz {
     dup
 
     dup 15 % 0 = if {
-        pop
-        "FizzBuzz" printLine
+        print
+        " - FizzBuzz" printLine
     } else {
         dup 5 % 0 = if {
-            pop
-            "Buzz" printLine
+            print
+            " - Buzz" printLine
         } else {
             dup 3 % 0 = if {
-                pop
-                "Fizz" printLine
+                print
+                " - Fizz" printLine
             } else {
                 # Print number
                 printLine
