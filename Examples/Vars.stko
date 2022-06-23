@@ -1,0 +1,6 @@
+var health
+5 set health
+"Created variable 'health' with value of " print health printLine
+
+health 1 - set health
+"Modified variable 'health'. It is now " print health printLine
