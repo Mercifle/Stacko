@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import sys
 import re
-from tkinter import Variable
 
 ### Error reporting
 def reportError(msg, emoji="😭"):
