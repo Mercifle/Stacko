@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import re
+from tkinter import Variable
 
 ### Error reporting
 def reportError(msg, emoji="😭"):
@@ -149,6 +150,20 @@ def generateBlocksFromTokens():
             NAME = Tokens.pop()
             Block.append((Token, Expression(None, NAME)))
 
+        # Variable declaration
+        elif Token == "var": 
+            # var <name>
+
+            NAME = Tokens.pop()
+            Block.append((Token, Expression(None, NAME)))
+        
+        # Set variable
+        elif Token == "set":
+            # set <name>
+
+            NAME = Tokens.pop()
+            Block.append((Token, Expression(None, NAME)))
+
         # Normal tokens
         else:
             Block.append((Token, None))
@@ -216,10 +231,33 @@ def getConstantWithName(name):
     
     return None
 
+Variables = []
+
+def doesVariableExist(name):
+    for Var in Variables:
+        if Var[0] == name:
+            return True
+    
+    return False
+
+def getVariableWithName(name):
+    for Var in Variables:
+        if Var[0] == name:
+            return Var
+    
+    return None
+
+def setVariableWithName(name, val):
+    for I, Var in enumerate(Variables):
+        if Var[0] == name:
+            Variables[I] = (name, val)
+
 def doesNameExist(name):
     if getFunctionWithName(name) != None:
         return True
     if getConstantWithName(name) != None:
+        return True
+    if getVariableWithName(name) != None:
         return True
     
     return False
@@ -504,6 +542,28 @@ def interpretBlocks(Blocks):
             
             VAL = Stack.pop()
             Constants.append((NAME, VAL))
+        
+        # Keyword 'var'
+        elif Token == "var":
+            NAME = Expr.name
+
+            if doesNameExist(NAME):
+                reportError(f"The variable '{NAME}' already exists.")
+                exit(1)
+            
+            Variables.append((NAME, None))
+        
+        # Keyword 'set'
+        elif Token == "set":
+            assertMinStackSize(1)
+            NAME = Expr.name
+
+            if not doesVariableExist(NAME):
+                reportError(f"The variable '{NAME}' does not exist.", "😐🔍")
+                exit(1)
+            
+            VAL = Stack.pop()
+            setVariableWithName(NAME, VAL)
 
         # Function
         elif doesFunctionExist(Token):
@@ -514,6 +574,11 @@ def interpretBlocks(Blocks):
         elif doesConstantExist(Token):
             CONST = getConstantWithName(Token)
             Stack.append(CONST[1])
+
+        # Variable
+        elif doesVariableExist(Token):
+            VAR = getVariableWithName(Token)
+            Stack.append(VAR[1])
 
         # Unknown token
         else:
