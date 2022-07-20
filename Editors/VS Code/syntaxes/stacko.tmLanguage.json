@@ -12,7 +12,16 @@
 			"include": "#const-def"
 		},
 		{
+			"include": "#var-def"
+		},
+		{
+			"include": "#set-var"
+		},
+		{
 			"include": "#fnn-def"
+		},
+		{
+			"include": "#file-include"
 		},
 		{
 			"include": "#comments"
@@ -59,7 +68,29 @@
 					"name": "keyword.const.stacko"
 				},
 				"2": {
-					"name": "variable.name"
+					"name": "variable.name.stacko"
+				}
+			}
+		},
+		"var-def": {
+			"match": "\\b(var)\\s+(\\S+)",
+			"captures": {
+				"1": {
+					"name": "keyword.var.stacko"
+				},
+				"2": {
+					"name": "variable.name.stacko"
+				}
+			}
+		},
+		"set-var": {
+			"match": "\\b(set)\\s+(\\S+)",
+			"captures": {
+				"1": {
+					"name": "keyword.const.stacko"
+				},
+				"2": {
+					"name": "variable.name.stacko"
 				}
 			}
 		},
@@ -70,7 +101,18 @@
 					"name": "keyword.fnn.stacko"
 				},
 				"2": {
-					"name": "entity.name.function"
+					"name": "entity.name.function.stacko"
+				}
+			}
+		},
+		"file-include": {
+			"match": "\\b(file)\\s+(\\S+)",
+			"captures": {
+				"1": {
+					"name": "meta.preprocessor.file.stacko"
+				},
+				"2": {
+					"name": "meta.preprocessor.string.stacko"
 				}
 			}
 		},

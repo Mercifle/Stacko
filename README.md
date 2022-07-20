@@ -31,7 +31,7 @@ A simple stack-based programming language.
 ```py
 10 dup 0 = not while {
     dup printLine   # Print counter value
-    1 -             # Subtrack one from counter
+    1 -             # Subtract one from counter
     dup 0 = not     # Check if counter is zero
 }
 ```
@@ -67,7 +67,7 @@ No                  # Pushes boolean literal `false`
 ### Types
 
 Values can fall into one of three types in Stack, those types being `number`, `boolean`, or `string`.
-Three cooresponding operators exist allowing you to *attempt* to convert a value of one type into that of another.
+Three corresponding operators exist allowing you to *attempt* to convert a value of one type into that of another.
 If the value you are trying to coerce cannot be coerced into the desired type, the program will crash.
 
 #### Example
@@ -172,3 +172,69 @@ fnn sayHello {
 
 "World" sayHello    # Prints "Hello, World!"
 ```
+
+
+### Constants
+
+Constants can be used to assign a name to a constant value of any type which can then later be referenced elsewhere in a script.
+
+Constants can be created with the `const` keyword, followed by a name. Constants will be assigned the top-most value on the stack on definition, meaning that at least one value must already be on the stack before a constant can be defined.
+
+#### Example
+
+```py
+# Create constant `pi` with the value 3.14
+3.14 const pi
+pi 3.14 assertEqual
+```
+
+
+### Variables
+
+Variables can be used to assign a name to a value of any type which can then later be referenced elsewhere in a script. Unlike constants variables are mutable, meaning their contents can be modified after variable definition.
+
+Variables in Stacko are loosely typed, meaning that the type of a given variable is not in any way enforced by the interpreter, and may be subject to change.
+
+Variables can be created with the `var` keyword, followed by a name. Unlike constants, variables are not assigned a value upon initialization. Assigning a value to a variable is up to the user, and can be done with the `set` keyword, followed by the name of the variable you would like to modify. This will assign the selected variable with the top-most value on the stack.
+
+#### Example
+
+```py
+# Define variable `foo`
+var foo
+
+# Assign `foo` a value of 3
+3 set foo
+foo 3 assertEqual
+
+# Assign `foo` a value of "bar"
+"bar" set foo
+foo "bar" assertEqual
+```
+
+
+### Including Modules
+
+Including external modules can be done using the `file` keyword, preceded by the path of the desired module relative to the main source file--that being the file which is initially passed to the Stacko interpreter to be run.
+
+#### Example
+
+```py
+# Main.stko
+file Defs.stko
+file Lib/Math.stko
+
+pi squared 9.8596 assertEqual
+```
+
+```py
+# Defs.stko
+3.14 const pi
+```
+
+```py
+# Lib/Math.stko
+fnn squared {
+    toNum
+    dup *
+}
