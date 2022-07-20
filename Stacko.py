@@ -266,7 +266,12 @@ def interpretBlocks(Blocks):
     for Token, Expr in Blocks:
         # Push string
         if Token.startswith('"') and Token.endswith('"'):
-            Stack.append(Token[1:-1])
+            STR = Token[1:-1]
+            STR = STR.replace("\\e", "\033")
+            STR = STR.replace("\\n", "\n")
+            STR = STR.replace("\\r", "\r")
+            STR = STR.replace("\\t", "\t")
+            Stack.append(STR)
 
         # Push number
         elif Token.lstrip("-+").replace(".", "", 1).isdigit():
