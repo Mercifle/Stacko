@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import re
+import time
 
 ### Error reporting
 def reportError(msg, emoji="😭"):
@@ -467,6 +468,12 @@ def interpretBlocks(Blocks):
             RETURN_CODE = Stack.pop()
             assertType(RETURN_CODE, float)
             exit(int(RETURN_CODE))
+
+        # Keyword 'waitMore'
+        elif Token == "waitMore":
+            TIME = Stack.pop()
+            assertType(TIME, float)
+            time.sleep(TIME)
 
         ### Assertions
         
