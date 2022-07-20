@@ -1,0 +1,41 @@
+# Resets
+fnn resetAll            { "\e[0m" print }
+fnn resetColor          { "\e[39m" print }
+fnn resetColorBg        { "\e[49m" print }
+
+# Styles
+fnn setBold             { "\e[1m" print }
+fnn setDim              { "\e[2m" print }
+fnn setItalic           { "\e[3m" print }
+fnn setUnderline        { "\e[4m" print }
+fnn setBlinking         { "\e[5m" print }
+fnn setInverse          { "\e[7m" print }
+fnn setHidden           { "\e[8m" print }
+fnn setStrikethrough    { "\e[9m" print }
+
+fnn resetBold           { "\e[21m" print }
+fnn resetDim            { "\e[22m" print }
+fnn resetItalic         { "\e[23m" print }
+fnn resetUnderline      { "\e[24m" print }
+fnn resetBlinking       { "\e[25m" print }
+fnn resetInverse        { "\e[27m" print }
+fnn resetHidden         { "\e[28m" print }
+fnn resetStrikethrough  { "\e[29m" print }
+
+fnn setBlack            { "\e[30m" print }
+fnn setRed              { "\e[31m" print }
+fnn setGreen            { "\e[32m" print }
+fnn setYellow           { "\e[33m" print }
+fnn setBlue             { "\e[34m" print }
+fnn setMagenta          { "\e[35m" print }
+fnn setCyan             { "\e[36m" print }
+fnn setWhite            { "\e[37m" print }
+
+fnn setBlackBg          { "\e[40m" print }
+fnn setRedBg            { "\e[41m" print }
+fnn setGreenBg          { "\e[42m" print }
+fnn setYellowBg         { "\e[43m" print }
+fnn setBlueBg           { "\e[44m" print }
+fnn setMagentaBg        { "\e[45m" print }
+fnn setCyanBg           { "\e[46m" print }
+fnn setWhiteBg          { "\e[47m" print }
