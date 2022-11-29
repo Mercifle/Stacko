@@ -106,7 +106,7 @@ def expectToken(Val):
 def generateBlocksFromTokens():
     Block = []
 
-    while len(Tokens) > 0 and Tokens[-1] != "}":
+    while len(Tokens) > 0 and Tokens[-1] != "}" and Tokens[-1] != "]":
         Token = Tokens.pop()
 
         # If expressions
@@ -142,6 +142,11 @@ def generateBlocksFromTokens():
             expectToken("{")
             Block.append((Token, Expression([generateBlocksFromTokens()], NAME)))
             expectToken("}")
+
+        # Array
+        elif Token == "[":
+            Block.append(("[", generateBlocksFromTokens()))
+            expectToken("]")
 
         # Constants
         elif Token == "const":
@@ -179,6 +184,11 @@ def printValue(val, end="\r\n"):
             print("Yes", end=end)
         elif val == False:
             print("No", end=end)
+    elif type(val) is list:
+        print("[ ", end="")
+        for elem in val:
+            printValue(elem[0] + " ", end="")
+        print("]")
     else:
         print(val, end=end)
 
@@ -282,8 +292,13 @@ def interpretBlocks(Blocks):
         elif Token == "Yes":
             Stack.append(True)
 
+        # Push 'No'
         elif Token == "No":
             Stack.append(False)
+
+        # Push array
+        elif Token == "[":
+            Stack.append(Expr)
 
 
         ### Type-casting
@@ -575,6 +590,18 @@ def interpretBlocks(Blocks):
             
             VAL = Stack.pop()
             setVariableWithName(NAME, VAL)
+        
+        # Keyword 'getElement'
+        elif Token == "getElement":
+            assertMinStackSize(2)
+
+            INDEX = Stack.pop()
+            assertType(INDEX, float)
+            LIST = Stack.pop()
+            assertType(LIST, list)
+
+            ELEMENT = LIST[int(INDEX)][0]
+            Stack.append(ELEMENT)
 
         # Function
         elif doesFunctionExist(Token):
