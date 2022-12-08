@@ -2,6 +2,7 @@
 import sys
 import re
 import time
+import random
 
 ### Error reporting
 def reportError(msg, emoji="😭"):
@@ -590,6 +591,11 @@ def interpretBlocks(Blocks):
             
             VAL = Stack.pop()
             setVariableWithName(NAME, VAL)
+        
+        # Keyword 'random'
+        elif Token == "random":
+            VAL = random.randint(0, sys.maxsize)
+            Stack.append(VAL)
         
         # Keyword 'getElement'
         elif Token == "getElement":
