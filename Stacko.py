@@ -606,7 +606,7 @@ def interpretBlocks(Blocks):
             assertMinStackSize(2)
 
             INDEX = Stack.pop()
-            assertType(INDEX, float)
+            assertType(INDEX, int)
             LIST = Stack.pop()
             assertType(LIST, list)
 
