@@ -286,10 +286,10 @@ def interpretBlocks(Blocks):
 
         # Push number
         elif Token.lstrip("-+").replace(".", "", 1).isdigit():
-            NUMBER = int(Token)
+            NUMBER = float(Token)
 
-            if "." in Token:
-                NUMBER = float(Token)
+            if not "." in Token:
+                NUMBER = int(Token)
 
             Stack.append(NUMBER)
 
