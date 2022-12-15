@@ -486,7 +486,7 @@ def interpretBlocks(Blocks):
         elif Token == "exit":
             assertMinStackSize(1)
             RETURN_CODE = Stack.pop()
-            assertType(RETURN_CODE, float)
+            assertType(RETURN_CODE, int)
             exit(int(RETURN_CODE))
 
         # Keyword 'waitMore'
