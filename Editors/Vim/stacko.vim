@@ -18,7 +18,7 @@ endif
 syn keyword stackoConditional if else
 syn keyword stackoRepeat while
 syn keyword stackoOperator + - * / % = < <= > >=
-syn keyword stackoKeyword dup pop not print printLine readLine exit assert assertEqual assertNotEqual toNum toString toBool fnn const file var set
+syn keyword stackoKeyword dup pop not print printLine readLine exit assert assertEqual assertNotEqual toNum toString toBool fnn const file var set waitMore random getElement
 
 syn region stackoString start='"' end='"'
 syn match stackoFloat "\d+(\.\d+)?"
