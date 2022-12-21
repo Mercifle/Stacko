@@ -22,3 +22,5 @@ for Test in Tests:
         passTest(Test)
     else:
         failTest(Test)
+
+exit(ReturnCode)
