@@ -40,7 +40,7 @@
 				},
 				{
 					"name": "keyword.other.stacko",
-					"match": "\\b(dup|pop|not|printLine|readLine|exit|assert|assertEqual|assertNotEqual|toNum|toString|toBool)\\b"
+					"match": "\\b(dup|pop|not|printLine|readLine|exit|assert|assertEqual|assertNotEqual|toNum|toString|toBool|waitMore|random|getElement)\\b"
 				}
 			]
 		},

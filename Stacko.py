@@ -86,6 +86,60 @@ for ImportPath in Imports:
 Tokens += collectTokensFromFile(Path)
 Tokens.reverse()
 
+def isLiteral(Token):
+    # String
+    if Token.startswith('"') and Token.endswith('"'):
+        return True
+    # Number
+    elif Token.lstrip("-+").replace(".", "", 1).isdigit():
+        return True
+    # Boolean
+    elif Token == "Yes" or Token == "No":
+        return True
+    # Array
+    elif Token == "[":
+        return True
+
+    return False
+
+def parseLiteral(Token, Expr):
+    # String
+    if Token.startswith('"') and Token.endswith('"'):
+        STR = Token[1:-1]
+        STR = STR.replace("\\e", "\033")
+        STR = STR.replace("\\n", "\n")
+        STR = STR.replace("\\r", "\r")
+        STR = STR.replace("\\t", "\t")
+        return STR
+
+    # Number
+    elif Token.lstrip("-+").replace(".", "", 1).isdigit():
+        NUMBER = float(Token)
+
+        if not "." in Token:
+            NUMBER = int(Token)
+
+        return NUMBER
+
+    # Yes
+    elif Token == "Yes":
+        return True
+
+    # No
+    elif Token == "No":
+        return False
+
+    # Array
+    elif Token == "[":
+        ARRAY = []
+        for element in Expr:
+            ARRAY.append(parseLiteral(element[0], element[1]))
+
+        return ARRAY
+
+    reportError(f"Failed to parse token '{Token}' as a literal")
+    exit(1)
+
 class Expression:
     name = ""
     bodies = []
@@ -146,6 +200,8 @@ def generateBlocksFromTokens():
 
         # Array
         elif Token == "[":
+            # [ ... ]
+
             Block.append(("[", generateBlocksFromTokens()))
             expectToken("]")
 
@@ -275,36 +331,9 @@ def doesNameExist(name):
 
 def interpretBlocks(Blocks):
     for Token, Expr in Blocks:
-        # Push string
-        if Token.startswith('"') and Token.endswith('"'):
-            STR = Token[1:-1]
-            STR = STR.replace("\\e", "\033")
-            STR = STR.replace("\\n", "\n")
-            STR = STR.replace("\\r", "\r")
-            STR = STR.replace("\\t", "\t")
-            Stack.append(STR)
-
-        # Push number
-        elif Token.lstrip("-+").replace(".", "", 1).isdigit():
-            NUMBER = float(Token)
-
-            if not "." in Token:
-                NUMBER = int(Token)
-
-            Stack.append(NUMBER)
-
-        # Push 'Yes'
-        elif Token == "Yes":
-            Stack.append(True)
-
-        # Push 'No'
-        elif Token == "No":
-            Stack.append(False)
-
-        # Push array
-        elif Token == "[":
-            Stack.append(Expr)
-
+        # Literals
+        if isLiteral(Token):
+            Stack.append(parseLiteral(Token, Expr))
 
         ### Type-casting
 
@@ -487,7 +516,7 @@ def interpretBlocks(Blocks):
             assertMinStackSize(1)
             RETURN_CODE = Stack.pop()
             assertType(RETURN_CODE, int)
-            exit(int(RETURN_CODE))
+            exit(RETURN_CODE)
 
         # Keyword 'waitMore'
         elif Token == "waitMore":
@@ -610,7 +639,7 @@ def interpretBlocks(Blocks):
             LIST = Stack.pop()
             assertType(LIST, list)
 
-            ELEMENT = LIST[int(INDEX)][0]
+            ELEMENT = LIST[int(INDEX)]
             Stack.append(ELEMENT)
 
         # Function
