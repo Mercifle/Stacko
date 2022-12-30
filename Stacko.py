@@ -3,6 +3,7 @@ import sys
 import re
 import time
 import random
+import pygame
 
 ### Error reporting
 def reportError(msg, emoji="😭"):
@@ -299,6 +300,7 @@ def getConstantWithName(name):
     return None
 
 Variables = []
+Window = None
 
 def doesVariableExist(name):
     for Var in Variables:
@@ -330,6 +332,8 @@ def doesNameExist(name):
     return False
 
 def interpretBlocks(Blocks):
+    global Window
+
     for Token, Expr in Blocks:
         # Literals
         if isLiteral(Token):
@@ -641,6 +645,35 @@ def interpretBlocks(Blocks):
 
             ELEMENT = LIST[int(INDEX)]
             Stack.append(ELEMENT)
+
+        #### PYGAME KEYWORDS ####
+
+        # createWindow
+        elif Token == "createWindow":
+            pygame.init()
+            Window = pygame.display.set_mode((640, 480))
+        
+        # closeWindow
+        elif Token == "closeWindow":
+            pygame.quit()
+        
+        elif Token == "windowRunning":
+            RESULT = True
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    RESULT = (False)
+
+            Stack.append(RESULT)
+        
+        elif Token == "setWindowColor":
+            assertMinStackSize(1)
+            COLOR = Stack.pop()
+            assertType(COLOR, str)
+            Window.fill(pygame.Color(COLOR))
+        
+        elif Token == "windowUpdate":
+            pygame.display.flip()
 
         # Function
         elif doesFunctionExist(Token):
