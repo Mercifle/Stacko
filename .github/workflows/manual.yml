@@ -17,4 +17,7 @@ jobs:
           python-version: 3.x
 
       - name: Run tests
-        run: python3 Test.py
+        run: |
+          python -m pip install --upgrade pip
+          python3 -m pip install pygame
+          python3 Test.py
